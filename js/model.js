@@ -1,7 +1,7 @@
 export default class Model {
     constructor () {
         this.tasks = [];
-        this.loadFromLocalStorage()
+        this.loadFromLocalStorage();
     }
     // загрузка данных из localStorage и проверка
     loadFromLocalStorage() {
@@ -13,7 +13,7 @@ export default class Model {
 
     // сохраняем данные в ocalStorage
     saveToLocalStorage () {
-        localStorage.setItem('task', JSON.stringify(this.tasks));
+        localStorage.setItem('tasks', JSON.stringify(this.tasks));
     }
 
     // добавление задачи
@@ -24,16 +24,19 @@ export default class Model {
             text: text,
         }
         this.tasks.push(newTask);
+        this.saveToLocalStorage();
     }
     // метод изменения статуса
     doneTask(task) {
-        task.status = 'active';
+        task.status = 'done';
+        this.saveToLocalStorage();
     }
     // удаление задачи
     removeTask(task) {
         // получаем индекс задачи
         const index = this.tasks.indexOf(task);
         this.tasks.splice(index, 1);
+        this.saveToLocalStorage();
     }
 
 }
