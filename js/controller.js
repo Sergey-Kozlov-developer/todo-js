@@ -4,9 +4,38 @@ import View from './view.js';
 const model = new Model();
 const view = new View(model.tasks);
 
-model.addTask('Заверстать стартовый шаблон');
-model.addTask('Написать скрипт');
-model.addTask('Delete JavaScript');
-model.addTask('Delete JavaScript');
-model.doneTask(model.tasks[1]);
-console.log(model);
+// submit прослушка формы
+view.elements.form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    // добавляем задачу
+    const newTask = model.addTask(view.elements.input.value);
+    // рендер задачи
+    view.renderTask(newTask);
+    // очищаем поле ввода после добавления задачи
+    view.clearInput();
+});
+
+// нажатие на чекбокс или кнопку удалить
+view.elements.taskList.addEventListener('click', function (e) {
+
+    // проверяем клик по checkbox
+    if (e.target.getAttribute('type') === 'checkbox') {
+        const id =e.target.closest('.task-item').dataset.id;
+        const task = model.findTask(id);
+        model.changeStatus(task);
+
+        view.changeStatus(task);
+    }
+
+    // удалить task
+    if (e.target.hasAttribute('data-delete')) {
+        const id =e.target.closest('.task-item').dataset.id;
+        const task = model.findTask(id);
+        model.removeTask(task);
+        view.removeTask(task);
+    }
+
+
+});
+
+
