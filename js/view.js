@@ -23,8 +23,8 @@ export default class View {
 
         const taskHTML = `
         <li class="task-item ${completeClass}" data-id="${taskObject.id}">
-            <div class="task-checkbox ${checked}" type="checkbox"></div>
-            <div class="task-content" type="checkbox">
+            <div class="task-checkbox ${checked}" data-type="checkbox"></div>
+            <div class="task-content" data-type="checkbox">
                 <span class="task-text">${taskObject.text}</span>
             </div>
             <button class="task-delete" data-delete>×</button>
@@ -40,11 +40,14 @@ export default class View {
 
     changeStatus(taskObject) {
         const taskElement = this.elements.taskList.querySelector(`[data-id="${taskObject.id}"]`);
-        const taskTextEl = taskElement.querySelector('li');
+        const checkbox = taskElement.querySelector('.task-checkbox');
+
         if (taskObject.status === 'done') {
-            taskTextEl.classList.add('completed');
+            taskElement.classList.add('completed');
+            checkbox.classList.add('checked');
         } else {
-            taskTextEl.classList.remove('completed');
+            taskElement.classList.remove('completed');
+            checkbox.classList.remove('checked');
         }
     }
 
@@ -54,6 +57,3 @@ export default class View {
     }
 
 }
-
-
-// 3. создать переменную lements в которой находим элементы разметки

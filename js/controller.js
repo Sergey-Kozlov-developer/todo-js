@@ -19,7 +19,7 @@ view.elements.form.addEventListener('submit', function (e) {
 view.elements.taskList.addEventListener('click', function (e) {
 
     // проверяем клик по checkbox
-    if (e.target.getAttribute('type') === 'checkbox') {
+    if (e.target.getAttribute('data-type') && e.target.getAttribute('data-type') === 'checkbox') {
         const id =e.target.closest('.task-item').dataset.id;
         const task = model.findTask(id);
         model.changeStatus(task);
