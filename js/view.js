@@ -6,6 +6,7 @@ export default class View {
         // в обычной ф-ции this ссылается на глобальный window
         tasks.forEach((task) => {
             this.renderTask(task);
+            this.updateTaskCount(tasks.length);
         })
     }
 
@@ -13,6 +14,12 @@ export default class View {
         input: document.getElementById('newTask'),
         form: document.getElementById('form'),
         taskList: document.getElementById('tasksList'),
+        taskCount: document.getElementById('taskCount'),
+    }
+
+    // обновление кол-ва задач
+    updateTaskCount(count) {
+        this.elements.taskCount.textContent = `Всего задач: ${count}`;
     }
 
     // 2. создать метод renderTask(taskObject)
@@ -31,6 +38,7 @@ export default class View {
         </li>
         `;
         this.elements.taskList.insertAdjacentHTML('beforeend', taskHTML);
+
     }
 
     // очищение input

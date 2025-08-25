@@ -4,6 +4,11 @@ import View from './view.js';
 const model = new Model();
 const view = new View(model.tasks);
 
+// обновляем данные счетчика
+function updateTaskCount() {
+    view.updateTaskCount(model.tasks.length);
+}
+
 // submit прослушка формы
 view.elements.form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -13,6 +18,7 @@ view.elements.form.addEventListener('submit', function (e) {
     view.renderTask(newTask);
     // очищаем поле ввода после добавления задачи
     view.clearInput();
+    updateTaskCount();
 });
 
 // нажатие на чекбокс или кнопку удалить
@@ -23,7 +29,6 @@ view.elements.taskList.addEventListener('click', function (e) {
         const id =e.target.closest('.task-item').dataset.id;
         const task = model.findTask(id);
         model.changeStatus(task);
-
         view.changeStatus(task);
     }
 
@@ -33,6 +38,7 @@ view.elements.taskList.addEventListener('click', function (e) {
         const task = model.findTask(id);
         model.removeTask(task);
         view.removeTask(task);
+        updateTaskCount();
     }
 
 
